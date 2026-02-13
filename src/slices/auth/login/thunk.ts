@@ -1,100 +1,106 @@
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper";
+// import { postJwtLogin } from "../../../helpers/fakebackend_helper";
+
 import {
-  postFakeLogin,
-  postJwtLogin,
-} from "../../../helpers/fakebackend_helper";
+  loginSuccess,
+  logoutUserSuccess,
+  apiError,
+  reset_login_flag,
+} from "./reducer";
+import { postJwtLogin } from "../../../services/auth";
+import { parseApiError } from "../../../utils/api_error";
 
-import { loginSuccess, logoutUserSuccess, apiError, reset_login_flag } from './reducer';
-
-export const loginUser = (user : any, history : any) => async (dispatch : any) => {
+export const loginUser = (user: any, history: any) => async (dispatch: any) => {
   try {
-    let response;
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      let fireBaseBackend : any = getFirebaseBackend();
-      response = fireBaseBackend.loginUser(
-        user.email,
-        user.password
-      );
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      response = postJwtLogin({
-        email: user.email,
-        password: user.password
-      });
-
-    } else if (process.env.REACT_APP_DEFAULTAUTH) {
-      response = postFakeLogin({
-        email: user.email,
-        password: user.password,
-      });
-    }
+    // let response;
+    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+    //   let fireBaseBackend: any = getFirebaseBackend();
+    //   response = fireBaseBackend.loginUser(user.email, user.password);
+    // } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+    //   response = postJwtLogin({
+    //     email: user.email,
+    //     password: user.password,
+    //   });
+    // } else if (process.env.REACT_APP_DEFAULTAUTH) {
+    //   response = postFakeLogin({
+    //     email: user.email,
+    //     password: user.password,
+    //   });
+    // }
+    let response = postJwtLogin({
+      username: user.username,
+      password: user.password,
+    });
 
     var data = await response;
 
+    console.log(data);
+
     if (data) {
-      sessionStorage.setItem("authUser", JSON.stringify(data));
-      if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-        var finallogin : any = JSON.stringify(data);
-        finallogin = JSON.parse(finallogin)
-        data = finallogin.data;
-        if (finallogin.status === "success") {
-          dispatch(loginSuccess(data));
-          history('/dashboard')
-        } 
-        else {
-          dispatch(apiError(finallogin));
-        }
-      } else {
-        dispatch(loginSuccess(data));
-        history('/dashboard')
-      }
+      // sessionStorage.setItem("authUser", JSON.stringify(data));
+      // dispatch(loginSuccess(data));
+      history("/dashboard", { replace: true });
+      // if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
+      //   var finallogin: any = JSON.stringify(data);
+      //   finallogin = JSON.parse(finallogin);
+      //   data = finallogin.data;
+      //   if (finallogin.status === "success") {
+      //     dispatch(loginSuccess(data));
+      //     history("/dashboard");
+      //   } else {
+      //     dispatch(apiError(finallogin));
+      //   }
+      // } else {
+
+      // }
     }
   } catch (error) {
-    dispatch(apiError(error));
+    let message = parseApiError(error as any);
+    dispatch(apiError(message));
   }
 };
 
-export const logoutUser = () => async (dispatch : any) => {
+export const logoutUser = () => async (dispatch: any) => {
   try {
     sessionStorage.removeItem("authUser");
-    let fireBaseBackend : any = getFirebaseBackend();
+    let fireBaseBackend: any = getFirebaseBackend();
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = fireBaseBackend.logout;
       dispatch(logoutUserSuccess(response));
     } else {
       dispatch(logoutUserSuccess(true));
     }
-
   } catch (error) {
     dispatch(apiError(error));
   }
 };
 
-export const socialLogin = (type : any, history : any) => async (dispatch : any) => {
-  try {
-    let response;
+export const socialLogin =
+  (type: any, history: any) => async (dispatch: any) => {
+    try {
+      let response;
 
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const fireBaseBackend : any = getFirebaseBackend();
-      response = fireBaseBackend.socialLoginUser(type);
-    }
-    //  else {
+      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+        const fireBaseBackend: any = getFirebaseBackend();
+        response = fireBaseBackend.socialLoginUser(type);
+      }
+      //  else {
       //   response = postSocialLogin(data);
       // }
-      
+
       const socialdata = await response;
-    if (socialdata) {
-      sessionStorage.setItem("authUser", JSON.stringify(response));
-      dispatch(loginSuccess(response));
-      history('/dashboard')
+      if (socialdata) {
+        sessionStorage.setItem("authUser", JSON.stringify(response));
+        dispatch(loginSuccess(response));
+        history("/dashboard");
+      }
+    } catch (error) {
+      dispatch(apiError(error));
     }
+  };
 
-  } catch (error) {
-    dispatch(apiError(error));
-  }
-};
-
-export const resetLoginFlag = () => async (dispatch : any) => {
+export const resetLoginFlag = () => async (dispatch: any) => {
   try {
     const response = dispatch(reset_login_flag());
     return response;
