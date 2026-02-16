@@ -48,8 +48,6 @@ export const loginUser = (user: any, history: any) => async (dispatch: any) => {
 
 export const logoutUser = () => async () => {
   try {
-    localStorage.clear();
-
     let response = postJwtLogout();
 
     let data = await response;
@@ -58,6 +56,8 @@ export const logoutUser = () => async () => {
   } catch (error) {
     console.log(error);
     // dispatch(apiError(error));
+  } finally {
+    localStorage.clear();
   }
 };
 
