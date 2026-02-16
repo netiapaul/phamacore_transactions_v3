@@ -4,30 +4,15 @@ import { getFirebaseBackend } from "../../../helpers/firebase_helper";
 
 import {
   loginSuccess,
-  logoutUserSuccess,
+  // logoutUserSuccess,
   apiError,
   reset_login_flag,
 } from "./reducer";
-import { postJwtLogin } from "../../../services/auth";
+import { postJwtLogin, postJwtLogout } from "../../../services/auth";
 import { parseApiError } from "../../../utils/api_error";
 
 export const loginUser = (user: any, history: any) => async (dispatch: any) => {
   try {
-    // let response;
-    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-    //   let fireBaseBackend: any = getFirebaseBackend();
-    //   response = fireBaseBackend.loginUser(user.email, user.password);
-    // } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-    //   response = postJwtLogin({
-    //     email: user.email,
-    //     password: user.password,
-    //   });
-    // } else if (process.env.REACT_APP_DEFAULTAUTH) {
-    //   response = postFakeLogin({
-    //     email: user.email,
-    //     password: user.password,
-    //   });
-    // }
     let response = postJwtLogin({
       username: user.username,
       password: user.password,
@@ -35,10 +20,10 @@ export const loginUser = (user: any, history: any) => async (dispatch: any) => {
 
     var data = await response;
 
-    console.log(data);
-
-    if (data) {
-      // sessionStorage.setItem("authUser", JSON.stringify(data));
+    if (Object.keys(data).length) {
+      // sessionStorage.setItem("authUser", JSON.stringify(data["user"]));
+      localStorage.setItem("authUser", JSON.stringify(data));
+      // localStorage.setItem("token", JSON.stringify(data["token"]));
       // dispatch(loginSuccess(data));
       history("/dashboard", { replace: true });
       // if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
@@ -61,18 +46,18 @@ export const loginUser = (user: any, history: any) => async (dispatch: any) => {
   }
 };
 
-export const logoutUser = () => async (dispatch: any) => {
+export const logoutUser = () => async () => {
   try {
-    sessionStorage.removeItem("authUser");
-    let fireBaseBackend: any = getFirebaseBackend();
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = fireBaseBackend.logout;
-      dispatch(logoutUserSuccess(response));
-    } else {
-      dispatch(logoutUserSuccess(true));
-    }
+    localStorage.clear();
+
+    let response = postJwtLogout();
+
+    let data = await response;
+
+    console.log(data);
   } catch (error) {
-    dispatch(apiError(error));
+    console.log(error);
+    // dispatch(apiError(error));
   }
 };
 

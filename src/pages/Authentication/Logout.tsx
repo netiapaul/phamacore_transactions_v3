@@ -5,22 +5,16 @@ import { Navigate } from "react-router-dom";
 import { logoutUser } from "../../slices/thunks";
 
 //redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import withRouter from "../../Components/Common/withRouter";
-import { createSelector } from "reselect";
+// import { createSelector } from "reselect";
 
 const Logout = () => {
   const dispatch: any = useDispatch();
 
-
-  const logoutData = createSelector(
-    (state) => state.Login,
-    (isUserLogout) => isUserLogout.isUserLogout
-  );
-
   // Inside your component
-  const isUserLogout = useSelector(logoutData);
+  const isUserLogout = true;
 
   useEffect(() => {
     dispatch(logoutUser());
@@ -36,6 +30,5 @@ const Logout = () => {
 Logout.propTypes = {
   history: PropTypes.object,
 };
-
 
 export default withRouter(Logout);
