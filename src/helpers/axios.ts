@@ -4,7 +4,11 @@ import axios, { AxiosRequestConfig } from "axios";
 // const { api } = config;
 
 // default
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+// axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  timeout: 10000,
+});
 // content type
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -54,11 +58,12 @@ axios.interceptors.request.use(
 //   function onFulfilled(response) {
 //     // Any status code that lie within the range of 2xx cause this function to trigger
 //     // Do something with response data
-//     return response;
+//     return response.data;
 //   },
 //   function onRejected(error) {
 //     // Any status codes that falls outside the range of 2xx cause this function to trigger
 //     // Do something with response error
+//     console.log(error);
 //     return Promise.reject(error);
 //   },
 // );
@@ -69,6 +74,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
+    console.log(error);
     let message;
     switch (error.status) {
       case 500:
@@ -76,9 +82,6 @@ axios.interceptors.response.use(
         break;
       case 401:
         message = "Invalid credentials";
-        break;
-      case 404:
-        message = "Sorry! the data you are looking for could not be found";
         break;
       default:
         message = error.message || error;
