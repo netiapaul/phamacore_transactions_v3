@@ -18,7 +18,7 @@ import ParticlesAuth from "../AuthenticationInner/ParticlesAuth";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import withRouter from "../../Components/Common/withRouter";
 // Formik validation
 import * as Yup from "yup";
@@ -33,6 +33,7 @@ import { createSelector } from "reselect";
 
 const Login = (props: any) => {
   const dispatch: any = useDispatch();
+  const navigate = useNavigate();
 
   const selectLayoutState = (state: any) => state;
   const loginpageData = createSelector(selectLayoutState, (state) => ({
@@ -41,7 +42,7 @@ const Login = (props: any) => {
     errorMsg: state.Login.errorMsg,
   }));
   // Inside your component
-  const { user, error, errorMsg } = useSelector(loginpageData);
+  const { error, errorMsg } = useSelector(loginpageData);
 
   const [userLogin, setUserLogin] = useState<any>([]);
   const [passwordShow, setPasswordShow] = useState<boolean>(false);
@@ -78,7 +79,7 @@ const Login = (props: any) => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values, props.router.navigate));
+      dispatch(loginUser(values, navigate));
       setLoader(true);
     },
   });
