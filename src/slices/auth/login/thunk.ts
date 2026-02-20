@@ -11,35 +11,49 @@ import {
 import { postJwtLogin, postJwtLogout } from "../../../services/auth";
 import { parseApiError } from "../../../utils/api_error";
 
+// export const loginUser = (user: any, history: any) => async (dispatch: any) => {
+//   try {
+//     let response = postJwtLogin({
+//       username: user.username,
+//       password: user.password,
+//     });
+
+//     var data = await response;
+
+//     if (Object.keys(data).length) {
+//       // sessionStorage.setItem("authUser", JSON.stringify(data["user"]));
+//       localStorage.setItem("authUser", JSON.stringify(data));
+//       // localStorage.setItem("token", JSON.stringify(data["token"]));
+//       // dispatch(loginSuccess(data));
+//       history("/auth-branch", { replaces: true });
+//       // if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
+//       //   var finallogin: any = JSON.stringify(data);
+//       //   finallogin = JSON.parse(finallogin);
+//       //   data = finallogin.data;
+//       //   if (finallogin.status === "success") {
+//       //     dispatch(loginSuccess(data));
+//       //     history("/dashboard");
+//       //   } else {
+//       //     dispatch(apiError(finallogin));
+//       //   }
+//       // } else {
+
+//       // }
+//     }
+//   } catch (error) {
+//     let message = parseApiError(error as any);
+//     dispatch(apiError(message));
+//   }
+// };
+
 export const loginUser = (user: any, history: any) => async (dispatch: any) => {
   try {
-    let response = postJwtLogin({
+    let response = await postJwtLogin({
       username: user.username,
       password: user.password,
     });
-
-    var data = await response;
-
-    if (Object.keys(data).length) {
-      // sessionStorage.setItem("authUser", JSON.stringify(data["user"]));
-      localStorage.setItem("authUser", JSON.stringify(data));
-      // localStorage.setItem("token", JSON.stringify(data["token"]));
-      // dispatch(loginSuccess(data));
-      history("/dashboard", { replace: true });
-      // if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      //   var finallogin: any = JSON.stringify(data);
-      //   finallogin = JSON.parse(finallogin);
-      //   data = finallogin.data;
-      //   if (finallogin.status === "success") {
-      //     dispatch(loginSuccess(data));
-      //     history("/dashboard");
-      //   } else {
-      //     dispatch(apiError(finallogin));
-      //   }
-      // } else {
-
-      // }
-    }
+    console.log(response);
+    history("/auth-branch", { replaces: true });
   } catch (error) {
     let message = parseApiError(error as any);
     dispatch(apiError(message));
@@ -51,7 +65,6 @@ export const logoutUser = () => async () => {
     let response = postJwtLogout();
 
     let data = await response;
-
     console.log(data);
   } catch (error) {
     console.log(error);
