@@ -1,22 +1,11 @@
-interface ErrorResponse {
-  message?: string;
-  errors?: string[] | Record<string, unknown>;
-}
-
-interface ApiError {
-  response?: {
-    data?: string | ErrorResponse;
-  };
-  request?: unknown;
-  message?: string;
-}
+import { ApiError } from "../types/auth_types";
 
 export function parseApiError(
   err: ApiError,
   fallbackMessage = "An error occured processing your current request!",
 ): string {
   let message = fallbackMessage;
-
+  console.log(err);
   if (err?.response) {
     const data = err.response.data;
 
