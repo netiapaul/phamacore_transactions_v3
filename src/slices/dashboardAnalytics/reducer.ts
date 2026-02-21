@@ -6,6 +6,7 @@ import {
   // getAudiencesSessionsChartsData,
   //
   getDashboardAnalytics,
+  getProfitPicture,
 } from "./thunk";
 
 export const initialState: any = {
@@ -38,6 +39,8 @@ export const initialState: any = {
   userData: [],
   cusCategories: [],
   cusData: [],
+  // PROFIT PICTURE
+  profitPicture: [],
 };
 
 const DashboardAnalyticsSlice = createSlice({
@@ -96,7 +99,6 @@ const DashboardAnalyticsSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getDashboardAnalytics.fulfilled, (state, action: any) => {
-      console.log(action.payload);
       let branchData: any = [];
       let branchCategories: any = [];
       let personData: any = [];
@@ -199,6 +201,18 @@ const DashboardAnalyticsSlice = createSlice({
       state.cusData = cusData ?? [];
     });
     builder.addCase(getDashboardAnalytics.rejected, (state, action: any) => {
+      state.isLoading = false;
+      state.error = action.payload || null;
+    });
+    // PROFIT PICTURE
+    builder.addCase(getProfitPicture.pending, (state, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProfitPicture.fulfilled, (state, action: any) => {
+      state.isLoading = false;
+      state.profitPicture = action.payload ?? [];
+    });
+    builder.addCase(getProfitPicture.rejected, (state, action: any) => {
       state.isLoading = false;
       state.error = action.payload || null;
     });

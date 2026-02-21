@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "store";
 // }: {
 //   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 // }
-export const AnalysisFilters = () => {
+export const AnalysisFilters = ({ title }: { title: string }) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.DashboardAnalytics);
 

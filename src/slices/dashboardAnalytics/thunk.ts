@@ -17,7 +17,10 @@ import {
   getLastMonthSessionData as getLastMonthSessionDataApi,
   getCurrentYearSessionData as getCurrentYearSessionDataApi,
 } from "../../helpers/fakebackend_helper";
-import { salesAnalysis } from "../../services/dashboard_analytics";
+import {
+  salesAnalysis,
+  profitPicture,
+} from "../../services/dashboard_analytics";
 
 export const getAllData = createAsyncThunk(
   "dashboardAnalytics/getAllData",
@@ -126,6 +129,17 @@ export const getDashboardAnalytics = createAsyncThunk(
   ) => {
     try {
       let response = await salesAnalysis(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
+    }
+  },
+);
+export const getProfitPicture = createAsyncThunk(
+  "dashboardAnalytics/getProfitPicture",
+  async (data: { startDate: string; endDate: string }, thunkAPI) => {
+    try {
+      let response = await profitPicture(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");

@@ -154,9 +154,15 @@ const Navdata = () => {
       },
       subItems: [
         {
-          id: "analytics",
+          id: "sales_dashboard",
           label: "Sales Dashboard",
           link: "/sales-analysis/sales-dasboard",
+          parentId: "dashboard",
+        },
+        {
+          id: "profit_picture",
+          label: "Profit Picture",
+          link: "/profit-picture/profit-picture",
           parentId: "dashboard",
         },
         {

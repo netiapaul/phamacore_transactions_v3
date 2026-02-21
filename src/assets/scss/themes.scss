@@ -5,7 +5,7 @@
 @import"./shepherd.css";
 @import "./mermaid.min.css";
 
-//RTL 
+//RTL
 // @import "../scss/rtl/components-rtl";
 // @import "../scss/rtl/layouts-rtl";
 // @import "../scss/rtl/plugins-rtl";
@@ -291,4 +291,8 @@ aside.EmojiPickerReact.epr-main {
       }
     }
   }
+}
+
+.table__header {
+  background: #e5e5e5;
 }
