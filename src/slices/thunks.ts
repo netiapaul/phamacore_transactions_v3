@@ -7,6 +7,12 @@ export * from "./auth/register/thunk";
 export * from "./auth/forgetpwd/thunk";
 export * from "./auth/profile/thunk";
 
+// Dashboard Analytics
+export * from "./dashboardAnalytics/thunk";
+
+// Stocks Inventory
+export * from "./stocksInventory/thunk";
+
 //Calendar
 export * from "./calendar/thunk";
 //Chat
@@ -32,9 +38,6 @@ export * from "./invoice/thunk";
 
 //Mailbox
 export * from "./mailbox/thunk";
-
-// Dashboard Analytics
-export * from "./dashboardAnalytics/thunk";
 
 // Dashboard CRM
 export * from "./dashboardCRM/thunk";

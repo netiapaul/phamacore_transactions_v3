@@ -5,6 +5,7 @@ const Navdata = () => {
   const history = useNavigate();
   //state data
   const [isDashboard, setIsDashboard] = useState<boolean>(false);
+  const [isStockInventory, setIsStocksInventory] = useState<boolean>(false);
   const [isApps, setIsApps] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isPages, setIsPages] = useState<boolean>(false);
@@ -77,6 +78,9 @@ const Navdata = () => {
     if (iscurrentState !== "Dashboard") {
       setIsDashboard(false);
     }
+    if (iscurrentState !== "StockInventory") {
+      setIsStocksInventory(false);
+    }
     if (iscurrentState !== "Apps") {
       setIsApps(false);
     }
@@ -121,6 +125,7 @@ const Navdata = () => {
     history,
     iscurrentState,
     isDashboard,
+    isStockInventory,
     isApps,
     isAuth,
     isPages,
@@ -239,6 +244,27 @@ const Navdata = () => {
         //   badgeColor: "success",
         //   badgeName: "New",
         // },
+      ],
+    },
+    {
+      id: "stock_inventory",
+      label: "Stock Inventory",
+      icon: "ri-apps-2-line",
+      link: "/#",
+      stateVariables: isStockInventory,
+      click: function (e: any) {
+        e.preventDefault();
+        setIsStocksInventory(!isStockInventory);
+        setIscurrentState("StockInventory");
+        updateIconSidebar(e);
+      },
+      subItems: [
+        {
+          id: "sales_dashboard",
+          label: "Inventory Setups",
+          link: "/inventory-setup/inventory-items",
+          parentId: "stock_inventory",
+        },
       ],
     },
     {

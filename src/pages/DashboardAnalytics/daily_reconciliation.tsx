@@ -4,7 +4,7 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import TableContainer from "../../Components/Common/TableContainer";
 import { useAppDispatch, useAppSelector } from "store";
 import { getDailyReconciliation } from "../../slices/dashboardAnalytics/thunk";
-import { numberFormatter, dateFormatter } from "../../helpers/functions";
+import { numberFormatter } from "../../helpers/functions";
 
 const DailyReconciliation = () => {
   const dispatch = useAppDispatch();

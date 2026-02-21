@@ -8,6 +8,8 @@ import StockAnalysis from "../pages/DashboardAnalytics/stock_analysis";
 import BranchAnalysis from "../pages/DashboardAnalytics/branch_analysis";
 import CashierAnalysis from "../pages/DashboardAnalytics/cashier_analysis";
 import DailyReconciliation from "../pages/DashboardAnalytics/daily_reconciliation";
+// Stocks & Inventory
+import InvetoryItemsSetups from "../pages/stocks_inventory/inventory_setup";
 //
 import DashboardAnalytics from "../pages/DashboardAnalytics";
 import DashboardCrm from "../pages/DashboardCrm";
@@ -264,6 +266,12 @@ const authProtectedRoutes = [
     path: "/daily-reconciliation/daily-reconciliation",
     component: <DailyReconciliation />,
   },
+  // Stocks & Inventory
+  {
+    path: "/inventory-setup/inventory-items",
+    component: <InvetoryItemsSetups />,
+  },
+
   //
   { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },
