@@ -3,6 +3,11 @@ import { Navigate } from "react-router-dom";
 
 //Dashboard
 import SalesDashboard from "../pages/DashboardAnalytics/salesDashboard";
+import ProfitPicture from "../pages/DashboardAnalytics/profit_picture";
+import StockAnalysis from "../pages/DashboardAnalytics/stock_analysis";
+import BranchAnalysis from "../pages/DashboardAnalytics/branch_analysis";
+import CashierAnalysis from "../pages/DashboardAnalytics/cashier_analysis";
+//
 import DashboardAnalytics from "../pages/DashboardAnalytics";
 import DashboardCrm from "../pages/DashboardCrm";
 import DashboardEcommerce from "../pages/DashboardEcommerce";
@@ -250,6 +255,11 @@ import PageBlogOverview from "pages/Pages/Blogs/Overview";
 const authProtectedRoutes = [
   // dashboard
   { path: "/sales-analysis/sales-dasboard", component: <SalesDashboard /> },
+  { path: "/profit-picture/profit-picture", component: <ProfitPicture /> },
+  { path: "/sales-analysis/stock-analysis", component: <StockAnalysis /> },
+  { path: "/branch-analysis/branch-analysis", component: <BranchAnalysis /> },
+  { path: "/tills-analysis/tills-analysis", component: <CashierAnalysis /> },
+  //
   { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },
   { path: "/dashboard", component: <DashboardEcommerce /> },
