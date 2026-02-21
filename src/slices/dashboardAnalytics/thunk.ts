@@ -20,6 +20,7 @@ import {
 import {
   salesAnalysis,
   profitPicture,
+  stockAnalysis,
 } from "../../services/dashboard_analytics";
 
 export const getAllData = createAsyncThunk(
@@ -135,11 +136,24 @@ export const getDashboardAnalytics = createAsyncThunk(
     }
   },
 );
+
 export const getProfitPicture = createAsyncThunk(
   "dashboardAnalytics/getProfitPicture",
   async (data: { startDate: string; endDate: string }, thunkAPI) => {
     try {
       let response = await profitPicture(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
+    }
+  },
+);
+
+export const getStockAnalysis = createAsyncThunk(
+  "dashboardAnalytics/getStockAnalysis",
+  async (data: { startDate: string; endDate: string }, thunkAPI) => {
+    try {
+      let response = await stockAnalysis(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");

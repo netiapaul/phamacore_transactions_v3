@@ -166,6 +166,12 @@ const Navdata = () => {
           parentId: "dashboard",
         },
         {
+          id: "stock_analyisi",
+          label: "Stock Analysis",
+          link: "/sales-analysis/stock-analysis",
+          parentId: "dashboard",
+        },
+        {
           id: "analytics",
           label: "Analytics",
           link: "/dashboard-analytics",

@@ -40,3 +40,22 @@ export const profitPicture = async (parameters: {
     throw message;
   }
 };
+
+export const stockAnalysis = async (parameters: {
+  startDate: string;
+  endDate: string;
+  // bcodes: string;
+}) => {
+  try {
+    const response = await get(url.GET_STOCK_ANALYSIS, {
+      params: {
+        startDate: parameters.startDate,
+        endDate: parameters.endDate,
+      },
+    });
+    return response;
+  } catch (error) {
+    const message = parseApiError(error as any);
+    throw message;
+  }
+};

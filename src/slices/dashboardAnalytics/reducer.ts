@@ -7,6 +7,7 @@ import {
   //
   getDashboardAnalytics,
   getProfitPicture,
+  getStockAnalysis,
 } from "./thunk";
 
 export const initialState: any = {
@@ -41,6 +42,7 @@ export const initialState: any = {
   cusData: [],
   // PROFIT PICTURE
   profitPicture: [],
+  stockAnalysis: [],
 };
 
 const DashboardAnalyticsSlice = createSlice({
@@ -213,6 +215,18 @@ const DashboardAnalyticsSlice = createSlice({
       state.profitPicture = action.payload ?? [];
     });
     builder.addCase(getProfitPicture.rejected, (state, action: any) => {
+      state.isLoading = false;
+      state.error = action.payload || null;
+    });
+    // STOCK ANALYSIS
+    builder.addCase(getStockAnalysis.pending, (state, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getStockAnalysis.fulfilled, (state, action: any) => {
+      state.isLoading = false;
+      state.stockAnalysis = action.payload ?? [];
+    });
+    builder.addCase(getStockAnalysis.rejected, (state, action: any) => {
       state.isLoading = false;
       state.error = action.payload || null;
     });

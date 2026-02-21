@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 //Dashboard
 import SalesDashboard from "../pages/DashboardAnalytics/salesDashboard";
 import ProfitPicture from "../pages/DashboardAnalytics/profit_picture";
+import StockAnalysis from "../pages/DashboardAnalytics/stock_analysis";
 //
 import DashboardAnalytics from "../pages/DashboardAnalytics";
 import DashboardCrm from "../pages/DashboardCrm";
@@ -253,6 +254,7 @@ const authProtectedRoutes = [
   // dashboard
   { path: "/sales-analysis/sales-dasboard", component: <SalesDashboard /> },
   { path: "/profit-picture/profit-picture", component: <ProfitPicture /> },
+  { path: "/sales-analysis/stock-analysis", component: <StockAnalysis /> },
   //
   { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },
