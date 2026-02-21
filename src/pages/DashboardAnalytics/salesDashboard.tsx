@@ -22,6 +22,7 @@ const SalesAnalysis = () => {
     branchCategories,
     branchSalesSeries,
     personCategories,
+    personData,
     userCategories,
     userData,
     cusCategories,
@@ -75,7 +76,7 @@ const SalesAnalysis = () => {
         <Container fluid>
           <BreadCrumb title="Sales Dashboard" pageTitle="Dashboards" />
 
-          <AnalysisFilters />
+          <AnalysisFilters title="Sales Dashboard" />
 
           <Row>
             <Col xl={3} md={6}>
@@ -481,7 +482,7 @@ const SalesAnalysis = () => {
                           horizontalAlign: "right",
                         },
                       }}
-                      series={[...branchData]}
+                      series={[...personData]}
                       type="pie"
                       height={350}
                     />
