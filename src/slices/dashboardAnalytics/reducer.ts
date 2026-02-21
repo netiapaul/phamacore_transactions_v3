@@ -8,6 +8,8 @@ import {
   getDashboardAnalytics,
   getProfitPicture,
   getStockAnalysis,
+  getBranchAnalysis,
+  getCashierAnalysis,
 } from "./thunk";
 
 export const initialState: any = {
@@ -19,7 +21,7 @@ export const initialState: any = {
   //
   branches: "",
   range: "",
-  startDate: new Intl.DateTimeFormat("en-GB").format(new Date()),
+  startDate: "01/01/2026",
   endDate: new Intl.DateTimeFormat("en-GB").format(new Date()),
   error: "",
   isLoading: false,
@@ -43,6 +45,8 @@ export const initialState: any = {
   // PROFIT PICTURE
   profitPicture: [],
   stockAnalysis: [],
+  branchAnalysis: [],
+  cashierAnalysis: [],
 };
 
 const DashboardAnalyticsSlice = createSlice({
@@ -227,6 +231,30 @@ const DashboardAnalyticsSlice = createSlice({
       state.stockAnalysis = action.payload ?? [];
     });
     builder.addCase(getStockAnalysis.rejected, (state, action: any) => {
+      state.isLoading = false;
+      state.error = action.payload || null;
+    });
+    // BRANCH ANALYSIS
+    builder.addCase(getBranchAnalysis.pending, (state, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getBranchAnalysis.fulfilled, (state, action: any) => {
+      state.isLoading = false;
+      state.branchAnalysis = action.payload ?? [];
+    });
+    builder.addCase(getBranchAnalysis.rejected, (state, action: any) => {
+      state.isLoading = false;
+      state.error = action.payload || null;
+    });
+    // Cashier ANALYSIS
+    builder.addCase(getCashierAnalysis.pending, (state, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getCashierAnalysis.fulfilled, (state, action: any) => {
+      state.isLoading = false;
+      state.cashierAnalysis = action.payload ?? [];
+    });
+    builder.addCase(getCashierAnalysis.rejected, (state, action: any) => {
       state.isLoading = false;
       state.error = action.payload || null;
     });

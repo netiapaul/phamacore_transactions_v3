@@ -18,9 +18,11 @@ import {
   getCurrentYearSessionData as getCurrentYearSessionDataApi,
 } from "../../helpers/fakebackend_helper";
 import {
-  salesAnalysis,
-  profitPicture,
-  stockAnalysis,
+  salesAnalysisApi,
+  profitPictureApi,
+  stockAnalysisApi,
+  branchAnalysisApi,
+  cashierAnalysisApi,
 } from "../../services/dashboard_analytics";
 
 export const getAllData = createAsyncThunk(
@@ -129,7 +131,7 @@ export const getDashboardAnalytics = createAsyncThunk(
     thunkAPI,
   ) => {
     try {
-      let response = await salesAnalysis(data);
+      let response = await salesAnalysisApi(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
@@ -141,7 +143,7 @@ export const getProfitPicture = createAsyncThunk(
   "dashboardAnalytics/getProfitPicture",
   async (data: { startDate: string; endDate: string }, thunkAPI) => {
     try {
-      let response = await profitPicture(data);
+      let response = await profitPictureApi(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
@@ -153,7 +155,31 @@ export const getStockAnalysis = createAsyncThunk(
   "dashboardAnalytics/getStockAnalysis",
   async (data: { startDate: string; endDate: string }, thunkAPI) => {
     try {
-      let response = await stockAnalysis(data);
+      let response = await stockAnalysisApi(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
+    }
+  },
+);
+
+export const getBranchAnalysis = createAsyncThunk(
+  "dashboardAnalytics/getBranchAnalysis",
+  async (data: { startDate: string; endDate: string }, thunkAPI) => {
+    try {
+      let response = await branchAnalysisApi(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
+    }
+  },
+);
+
+export const getCashierAnalysis = createAsyncThunk(
+  "dashboardAnalytics/getCashierAnalysis",
+  async (data: { startDate: string; endDate: string }, thunkAPI) => {
+    try {
+      let response = await cashierAnalysisApi(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");

@@ -85,7 +85,7 @@ const DebouncedInput = ({
       {...props}
       value={value}
       id="search-bar-0"
-      className="form-control search"
+      className="form-control form-control-sm search"
       onChange={(e) => setValue(e.target.value)}
     />
   );
@@ -95,6 +95,7 @@ interface TableContainerProps {
   columns?: any;
   data?: any;
   isGlobalFilter?: any;
+  isCustomFilter?: any;
   isProductsFilter?: any;
   isCustomerFilter?: any;
   isOrderFilter?: any;
@@ -124,6 +125,7 @@ const TableContainer = ({
   columns,
   data,
   isGlobalFilter,
+  isCustomFilter,
   isProductsFilter,
   isCustomerFilter,
   isOrderFilter,
@@ -231,6 +233,25 @@ const TableContainer = ({
             </form>
           </CardBody>
         </Row>
+      )}
+      {isCustomFilter && (
+        <CardBody className="border border-dashed border-end-0 border-start-0">
+          <Row>
+            <Col></Col>
+            <Col md={5}>
+              {/* <form> */}
+              <div className={"search-box mb-2 d-inline-block float-end"}>
+                <DebouncedInput
+                  value={globalFilter ?? ""}
+                  onChange={(value) => setGlobalFilter(String(value))}
+                  placeholder={SearchPlaceholder}
+                />
+                <i className="bx bx-search-alt search-icon"></i>
+              </div>
+              {/* </form> */}
+            </Col>
+          </Row>
+        </CardBody>
       )}
 
       <div className={divClass}>

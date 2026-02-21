@@ -166,9 +166,21 @@ const Navdata = () => {
           parentId: "dashboard",
         },
         {
-          id: "stock_analyisi",
+          id: "stock_analysis",
           label: "Stock Analysis",
           link: "/sales-analysis/stock-analysis",
+          parentId: "dashboard",
+        },
+        {
+          id: "branch_analysis",
+          label: "Branch Analysis",
+          link: "/branch-analysis/branch-analysis",
+          parentId: "dashboard",
+        },
+        {
+          id: "cashier_analysis",
+          label: "Cashier Analysis",
+          link: "/tills-analysis/tills-analysis",
           parentId: "dashboard",
         },
         {
