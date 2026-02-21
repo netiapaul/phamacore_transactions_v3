@@ -23,6 +23,7 @@ import {
   stockAnalysisApi,
   branchAnalysisApi,
   cashierAnalysisApi,
+  dailyReconciliationApi,
 } from "../../services/dashboard_analytics";
 
 export const getAllData = createAsyncThunk(
@@ -180,6 +181,18 @@ export const getCashierAnalysis = createAsyncThunk(
   async (data: { startDate: string; endDate: string }, thunkAPI) => {
     try {
       let response = await cashierAnalysisApi(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error || "Error with sales dashboard");
+    }
+  },
+);
+
+export const getDailyReconciliation = createAsyncThunk(
+  "dashboardAnalytics/getDailyReconciliation",
+  async (data: { startDate: string; endDate: string }, thunkAPI) => {
+    try {
+      let response = await dailyReconciliationApi(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error || "Error with sales dashboard");

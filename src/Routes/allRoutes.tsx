@@ -7,6 +7,7 @@ import ProfitPicture from "../pages/DashboardAnalytics/profit_picture";
 import StockAnalysis from "../pages/DashboardAnalytics/stock_analysis";
 import BranchAnalysis from "../pages/DashboardAnalytics/branch_analysis";
 import CashierAnalysis from "../pages/DashboardAnalytics/cashier_analysis";
+import DailyReconciliation from "../pages/DashboardAnalytics/daily_reconciliation";
 //
 import DashboardAnalytics from "../pages/DashboardAnalytics";
 import DashboardCrm from "../pages/DashboardCrm";
@@ -259,6 +260,10 @@ const authProtectedRoutes = [
   { path: "/sales-analysis/stock-analysis", component: <StockAnalysis /> },
   { path: "/branch-analysis/branch-analysis", component: <BranchAnalysis /> },
   { path: "/tills-analysis/tills-analysis", component: <CashierAnalysis /> },
+  {
+    path: "/daily-reconciliation/daily-reconciliation",
+    component: <DailyReconciliation />,
+  },
   //
   { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },

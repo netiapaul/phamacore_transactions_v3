@@ -10,6 +10,7 @@ import {
   getStockAnalysis,
   getBranchAnalysis,
   getCashierAnalysis,
+  getDailyReconciliation,
 } from "./thunk";
 
 export const initialState: any = {
@@ -21,7 +22,7 @@ export const initialState: any = {
   //
   branches: "",
   range: "",
-  startDate: "01/01/2026",
+  startDate: "01/01/2025",
   endDate: new Intl.DateTimeFormat("en-GB").format(new Date()),
   error: "",
   isLoading: false,
@@ -47,6 +48,7 @@ export const initialState: any = {
   stockAnalysis: [],
   branchAnalysis: [],
   cashierAnalysis: [],
+  dailyReconciliation: [],
 };
 
 const DashboardAnalyticsSlice = createSlice({
@@ -255,6 +257,18 @@ const DashboardAnalyticsSlice = createSlice({
       state.cashierAnalysis = action.payload ?? [];
     });
     builder.addCase(getCashierAnalysis.rejected, (state, action: any) => {
+      state.isLoading = false;
+      state.error = action.payload || null;
+    });
+    // Cashier ANALYSIS
+    builder.addCase(getDailyReconciliation.pending, (state, action: any) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getDailyReconciliation.fulfilled, (state, action: any) => {
+      state.isLoading = false;
+      state.dailyReconciliation = action.payload ?? [];
+    });
+    builder.addCase(getDailyReconciliation.rejected, (state, action: any) => {
       state.isLoading = false;
       state.error = action.payload || null;
     });
