@@ -29,21 +29,61 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 // if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-const authUser: any = localStorage.getItem("authUser");
+// const authUser: any = localStorage.getItem("authUser");
+
+// // Add a request interceptor to inject default params
+// axios.interceptors.request.use((config) => {
+//   // Add your default parameter(s) to every request
+//   config.params = {
+//     ...config.params,
+//     dataBaseName: JSON.parse(localStorage.getItem("authUser") || "{}")
+//       ?.clientCode,
+//   };
+
+//   return config;
+// });
+
+// axios.interceptors.request.use(
+//   function (config) {
+//     const token = JSON.parse(authUser).token || null;
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     // Do something before request is sent
+//     return config;
+//   },
+//   function (error) {
+//     // Do something with request error
+//     return Promise.reject(error);
+//   },
+// );
 
 axios.interceptors.request.use(
-  function (config) {
-    const token = JSON.parse(authUser).token || null;
+  (config) => {
+    // Always read fresh user data
+    const raw = localStorage.getItem("authUser");
+    const user = raw ? JSON.parse(raw) : null;
+
+    const token: string | undefined = user?.token;
+    const clientCode: string | undefined = user["user"]?.clientCode;
+
+    // 1) Auth header
     if (token) {
+      config.headers = config.headers ?? {};
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // Do something before request is sent
+
+    // 2) Default query param (merge, don’t replace)
+    if (clientCode) {
+      config.params = {
+        ...(config.params ?? {}),
+        dataBaseName: clientCode,
+      };
+    }
+
     return config;
   },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
 // axios.interceptors.response.use(
@@ -89,17 +129,6 @@ axios.interceptors.response.use(
     return Promise.reject(message);
   },
 );
-// Add a request interceptor to inject default params
-axios.interceptors.request.use((config) => {
-  // Add your default parameter(s) to every request
-  config.params = {
-    ...config.params,
-    dataBaseName: JSON.parse(localStorage.getItem("authUser") || "{}")
-      ?.clientCode,
-  };
-
-  return config;
-});
 /**
  * Sets the default authorization
  * @param {*} token
